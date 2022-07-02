@@ -2,9 +2,13 @@ import * as React from "react";
 import * as api from "./api/country.api";
 import QuizButton from "./components/guessTheFlag/QuizButton";
 import QuizFlag from "./components/guessTheFlag/QuizFlag";
+import * as helper from "./helper/helper";
 
 const App = () => {
   const [data, setData] = React.useState([]);
+  const [response, setResponse] = React.useState([]);
+  const [goodResponse, setGoodReponse] = React.useState();
+  const [userResponse, setUserResponse] = React.useState("");
 
   React.useEffect(() => {
     if (Array.isArray(data) && !data.length) {
@@ -13,9 +17,27 @@ const App = () => {
           setData(countries);
         });
       }, 1000);
+    } else {
+      gameLogicRoot();
     }
   }, [data]);
-  const element = ["1", "2", "3", "4"];
+
+  React.useEffect(() => {
+    if (goodResponse?.name.common === userResponse) {
+      gameLogicRoot();
+    }
+  }, [userResponse]);
+
+  function gameLogicRoot() {
+    const randomGoodResponse = helper.getGoodResponse(data);
+    setGoodReponse(randomGoodResponse);
+    const buildReponse = helper.getRandomReponse(
+      data,
+      4,
+      randomGoodResponse.name.common
+    );
+    setResponse(buildReponse);
+  }
 
   if (!Array.isArray(data) || !data.length) {
     return (
@@ -30,11 +52,11 @@ const App = () => {
       <div className="flex flex-col items-center justify-evenly h-3/6 w-full xs:px-12 px-2 ">
         <span className="bg-blue-500 rounded-full p-2">0/10</span>
         <h2 className=" text-xl">What is this flag ?</h2>
-        <QuizFlag data={data} />
+        <QuizFlag flag={goodResponse?.flags.png} />
       </div>
       <div className="w-full h-3/6 flex flex-col sm:flex-wrap sm:flex-row">
-        {element.map((item, index) => (
-          <QuizButton key={index} data={data} index={index}>
+        {response.map((item, index) => (
+          <QuizButton key={index} index={index} check={setUserResponse}>
             {item}
           </QuizButton>
         ))}

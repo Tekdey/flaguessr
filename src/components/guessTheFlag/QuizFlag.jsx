@@ -1,18 +1,18 @@
 import React from 'react'
 import propTypes from "prop-types"
 
-const QuizFlag = ({data}) => {
+const QuizFlag = ({flag}) => {
   return (
     <img
-        className="object-cover h-100 w-[500px] rounded-md" 
+        className="object-cover h-100 w-[500px] rounded-md border" 
         alt="you need to find it"
-        src={data[70]?.flags.png}
+        src={flag}
       />
   )
 }
 
 QuizFlag.propTypes = {
-    data: propTypes.array
+  flag: propTypes.string
 }
 
 
