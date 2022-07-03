@@ -23,3 +23,14 @@ export function getRandomNumber(max) {
 export function getGoodResponse(data) {
   return data[getRandomNumber(data.length)];
 }
+export function refactorRangeTimeProp(time) {
+  return Number(time) * 1000;
+}
+export function refactorRangeTimeUi(time) {
+  const newTime = time.split(".");
+
+  if (!time.includes("5") || !time.includes(".5")) return `${time}m`;
+  if (time.includes("0.")) return `30s`;
+
+  return `${newTime[0]}m 30s`;
+}
