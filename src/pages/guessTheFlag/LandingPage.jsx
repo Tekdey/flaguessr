@@ -3,17 +3,22 @@ import * as helper from "../../helper/helper";
 import {useNavigate} from "react-router-dom"
 import ParameterToggle from "../../components/guessTheFlag/ParameterToggle";
 import ParameterSlider from "../../components/guessTheFlag/ParameterSlider";
+import ParameterDefaultToggle from "../../components/guessTheFlag/ParameterDefaultToggle";
 
 const LandingPage = () => {
   const navigate = useNavigate()
   
   const [isTime, setIsTime] = React.useState(false)
+  const [isFreeMode, setIsFreeMode] = React.useState(true)
   const [time, setTime] = React.useState({
     timeProp: 1,
     timeUI: '1m'
   })
 
   const handleSubmit = () => {
+    if(isFreeMode){
+      return navigate('/guesstheflag/game', {state: null})
+    }
     navigate('/guesstheflag/game', isTime && {state: {time: helper.refactorRangeTimeProp(time.timeProp)}})
   }
 
@@ -29,7 +34,8 @@ const LandingPage = () => {
     <form action="" className="flex flex-col md:flex-row justify-center border-2 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-3xl">
       
       <fieldset className="flex flex-col items-center  justify-center  w-[300px] h-[200px] border-b-2 md:border-r-2">
-       <ParameterToggle setIsTime={setIsTime}>Time ?</ParameterToggle>
+       <ParameterDefaultToggle setIsFreeMode={setIsFreeMode}>Free Mode</ParameterDefaultToggle>
+       {!isFreeMode && <ParameterToggle setIsTime={setIsTime}>Time ?</ParameterToggle>}
       </fieldset>
       
       <fieldset className="flex flex-col items-center justify-center gap-5 w-[300px] h-[200px]">

@@ -1,20 +1,26 @@
 import * as React from "react";
 import * as api from "../../api/country.api";
+import * as helper from "../../helper/helper";
 import QuizButton from "../../components/guessTheFlag/QuizButton";
 import QuizFlag from "../../components/guessTheFlag/QuizFlag";
-import * as helper from "../../helper/helper";
+import Score from "../../components/guessTheFlag/Score";
 
 import {useLocation} from "react-router-dom"
 
 const Game = () => {
 
   const [data, setData] = React.useState([]);
+  const [parameter, setParameter] = React.useState()
   const [response, setResponse] = React.useState([]);
   const [goodResponse, setGoodReponse] = React.useState();
-  const [userResponse, setUserResponse] = React.useState("");
+  const [userResponse, setUserResponse] = React.useState('');
+  const [score, setScore] = React.useState(0)
 
   const location = useLocation()
-  console.log(location);
+
+  React.useEffect(() => {
+    setParameter(location.state)
+  }, [location])
 
   React.useEffect(() => {
     if (Array.isArray(data) && !data.length) {
@@ -30,6 +36,7 @@ const Game = () => {
 
   React.useEffect(() => {
     if (goodResponse?.name.common === userResponse) {
+      setScore((prevState) => prevState + 1)
       gameLogicRoot();
     }
   }, [userResponse]);
@@ -52,17 +59,16 @@ const Game = () => {
       </div>
     );
   }
-
   return (
     <>
       <div className="flex flex-col items-center justify-evenly h-3/6 w-full xs:px-12 px-2 ">
-        <span className="bg-blue-500 rounded-full p-2">0/10</span>
+        {!parameter && <Score>{score}</Score>}
         <h2 className=" text-xl">What is this flag ?</h2>
         <QuizFlag flag={goodResponse?.flags.png} />
       </div>
       <div className="w-full h-3/6 flex flex-col sm:flex-wrap sm:flex-row">
         {response.map((item, index) => (
-          <QuizButton key={index} index={index} check={setUserResponse}>
+          <QuizButton key={index} index={index} setUserResponse={setUserResponse}>
             {item}
           </QuizButton>
         ))}
