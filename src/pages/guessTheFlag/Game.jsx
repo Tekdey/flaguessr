@@ -15,6 +15,7 @@ const Game = () => {
   const [goodResponse, setGoodReponse] = React.useState();
   const [userResponse, setUserResponse] = React.useState('');
   const [score, setScore] = React.useState(0)
+  const [notif, setNotif] = React.useState('')
 
   const location = useLocation()
 
@@ -38,6 +39,15 @@ const Game = () => {
     if (goodResponse?.name.common === userResponse) {
       setScore((prevState) => prevState + 1)
       gameLogicRoot();
+      setNotif('success')
+      setTimeout(() => {
+        setNotif(null)
+      }, 1000)
+    }else{
+      setNotif('error')
+      setTimeout(() => {
+        setNotif(null)
+      }, 1000)
     }
   }, [userResponse]);
 
@@ -61,10 +71,23 @@ const Game = () => {
   }
   return (
     <>
+
       <div className="flex flex-col items-center justify-evenly h-3/6 w-full xs:px-12 px-2 ">
-        {!parameter && <Score>{score}</Score>}
+          {/* {!parameter && <Score>{score}</Score>} */}
+        <div className="flex items-center justify-center w-full h-20">
+          {notif && (
+            notif === "success" ? 
+            <span class="bg-green-100 text-green-800 text-sm font-medium mr-2 p-5 rounded-full dark:bg-green-200 dark:text-green-900">Nice !</span>
+            : 
+            (<span class="bg-red-100 text-red-800 text-sm font-medium mr-2 p-5 rounded-full dark:bg-red-200 dark:text-red-900">Bad !</span>))}
+            
+        </div>
+        
         <h2 className=" text-xl">What is this flag ?</h2>
-        <QuizFlag flag={goodResponse?.flags.png} />
+          <QuizFlag flag={goodResponse?.flags.png} />
+
+     
+        
       </div>
       <div className="w-full h-3/6 flex flex-col sm:flex-wrap sm:flex-row">
         {response.map((item, index) => (
