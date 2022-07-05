@@ -36,10 +36,10 @@ const Game = () => {
   React.useEffect(() => {
     if(gameMode === "time"){
       const time = new Date()
-      time.setMilliseconds(18000)
+      time.setMilliseconds(location.state.time)
       setTimer(time)
     }
-  }, [gameMode])
+  }, [gameMode, location.state.time, data])
 
 
   React.useEffect(() => {

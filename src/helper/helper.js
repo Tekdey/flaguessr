@@ -24,7 +24,13 @@ export function getGoodResponse(data) {
   return data[getRandomNumber(data.length)];
 }
 export function refactorRangeTimeProp(time) {
-  return Number(time) * 1000;
+  let newTime;
+  if (time.includes(".5")) {
+    newTime = time.replace(".5", ".3");
+  }
+
+  newTime = Number(newTime) * 60000 + 13000;
+  return newTime;
 }
 export function refactorRangeTimeUi(time) {
   const newTime = time.split(".");
