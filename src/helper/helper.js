@@ -25,11 +25,13 @@ export function getGoodResponse(data) {
 }
 export function refactorRangeTimeProp(time) {
   let newTime;
-  if (time.includes(".5")) {
+  if (time.toString().includes(".")) {
     newTime = time.replace(".5", ".3");
+    newTime = Number(newTime) * 60000 + 13000;
+    return newTime;
   }
 
-  newTime = Number(newTime) * 60000 + 13000;
+  newTime = Number(time) * 60000;
   return newTime;
 }
 export function refactorRangeTimeUi(time) {

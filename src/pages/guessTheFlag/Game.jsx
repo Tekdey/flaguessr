@@ -39,7 +39,7 @@ const Game = () => {
       time.setMilliseconds(location.state.time)
       setTimer(time)
     }
-  }, [gameMode, location.state.time, data])
+  }, [gameMode, location.state?.time, data])
 
 
   React.useEffect(() => {
@@ -88,7 +88,7 @@ const Game = () => {
       <>
       <div className="flex flex-col items-center justify-evenly h-3/6 w-full xs:px-12 px-2 ">
         <div className={gameMode === "time" ? "flex items-center justify-around w-full h-20" : "flex items-center justify-center w-full h-20"}>
-          {gameMode === "time" && <Score>{score}</Score>}
+          {gameMode === "time" && <Score score={score} />}
           {gameMode === "time" && notif ? <AnswerBadge notif={notif} /> : <span className="mr-2 p-5 rounded-full ">&nbsp;</span>}
           {gameMode === "time" && <Timer expiryTimestamp={timer} setEndGame={setEndGame} />}
 
