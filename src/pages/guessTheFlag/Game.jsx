@@ -4,25 +4,43 @@ import * as helper from "../../helper/helper";
 import QuizButton from "../../components/guessTheFlag/QuizButton";
 import QuizFlag from "../../components/guessTheFlag/QuizFlag";
 import Score from "../../components/guessTheFlag/Score";
+import Timer from "../../components/guessTheFlag/Timer";
+import Loader from "../../components/guessTheFlag/Loader";
 
-import {useLocation} from "react-router-dom"
+import {useLocation, useNavigate} from "react-router-dom"
 import AnswerBadge from "../../components/guessTheFlag/AnswerBadge";
+import EndingCard from "../../components/guessTheFlag/EndingCard";
 
 const Game = () => {
 
   const [data, setData] = React.useState([]);
-  const [parameter, setParameter] = React.useState()
   const [response, setResponse] = React.useState([]);
   const [goodResponse, setGoodReponse] = React.useState();
   const [userResponse, setUserResponse] = React.useState('');
   const [score, setScore] = React.useState(0)
   const [notif, setNotif] = React.useState('')
+  const [gameMode, setGameMode] = React.useState('')
+  const [endGame, setEndGame] = React.useState(false)
+  const [timer, setTimer] = React.useState(false)
 
   const location = useLocation()
+  const navigate = useNavigate()
+
+
+/* It's checking if the location state is empty, if it is, it will navigate to the guesstheflag page. */
+  React.useEffect(() => {
+    if(!location.state) return navigate('/guesstheflag')
+    setGameMode(location.state.mode)
+  }, [location])
 
   React.useEffect(() => {
-    setParameter(location.state)
-  }, [location])
+    if(gameMode === "time"){
+      const time = new Date()
+      time.setMilliseconds(18000)
+      setTimer(time)
+    }
+  }, [gameMode])
+
 
   React.useEffect(() => {
     if (Array.isArray(data) && !data.length) {
@@ -63,20 +81,18 @@ const Game = () => {
     setResponse(buildReponse);
   }
 
-  if (!Array.isArray(data) || !data.length) {
-    return (
-      <div className="w-full h-screen flex items-center justify-center">
-        <img src="/assets/gif/loading.gif" alt="" style={{ width: "500px" }} />
-      </div>
-    );
-  }
+
   return (
     <>
-
+      {!Array.isArray(data) || !data.length ? (<Loader />) : endGame ? (<EndingCard score={score} />) : (
+      <>
       <div className="flex flex-col items-center justify-evenly h-3/6 w-full xs:px-12 px-2 ">
-          {/* {!parameter && <Score>{score}</Score>} */}
-        <div className="flex items-center justify-center w-full h-20">
-          {notif && (<AnswerBadge notif={notif} />)}
+        <div className={gameMode === "time" ? "flex items-center justify-around w-full h-20" : "flex items-center justify-center w-full h-20"}>
+          {gameMode === "time" && <Score>{score}</Score>}
+          {gameMode === "time" && notif ? <AnswerBadge notif={notif} /> : <span className="mr-2 p-5 rounded-full ">&nbsp;</span>}
+          {gameMode === "time" && <Timer expiryTimestamp={timer} setEndGame={setEndGame} />}
+
+          {gameMode === "free" && notif && <AnswerBadge notif={notif} />}
         </div>
         
         <h2 className=" text-xl">What is this flag ?</h2>
@@ -90,6 +106,7 @@ const Game = () => {
           </QuizButton>
         ))}
       </div>
+      </>)}
     </>
   );
 };

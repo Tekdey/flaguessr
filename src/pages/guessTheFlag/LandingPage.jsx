@@ -16,10 +16,10 @@ const LandingPage = () => {
   })
 
   const handleSubmit = () => {
-    if(isFreeMode){
-      return navigate('/guesstheflag/game', {state: null})
+    if(isFreeMode && !isTime){
+      return navigate('/guesstheflag/game', {state: {mode: 'free', time: null }})
     }
-    navigate('/guesstheflag/game', isTime && {state: {time: helper.refactorRangeTimeProp(time.timeProp)}})
+    navigate('/guesstheflag/game', isTime && !isFreeMode && {state: {mode: 'time', time: helper.refactorRangeTimeProp(time.timeProp)}})
   }
 
   return (
@@ -34,13 +34,13 @@ const LandingPage = () => {
     <form action="" className="flex flex-col md:flex-row justify-center border-2 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-3xl">
       
       <fieldset className="flex flex-col items-center  justify-center  w-[300px] h-[200px] border-b-2 md:border-r-2">
-       <ParameterDefaultToggle setIsFreeMode={setIsFreeMode}>Free Mode</ParameterDefaultToggle>
+       <ParameterDefaultToggle setIsFreeMode={setIsFreeMode} init={setIsTime}>Free Mode</ParameterDefaultToggle>
        {!isFreeMode && <ParameterToggle setIsTime={setIsTime}>Time ?</ParameterToggle>}
       </fieldset>
       
       <fieldset className="flex flex-col items-center justify-center gap-5 w-[300px] h-[200px]">
-        {!isTime && <p>No parameters ? :(</p>}
-        {isTime && <ParameterSlider setTime={setTime}>{time.timeUI}</ParameterSlider>}
+        {isFreeMode && <p>No parameters ? :(</p>}
+        {!isFreeMode && isTime && <ParameterSlider setTime={setTime}>{time.timeUI}</ParameterSlider>}
      </fieldset>
 
     </form>
