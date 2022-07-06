@@ -8,7 +8,7 @@
 @layer base{
     html{
         font-family: 'Poppins', sans-serif;
-        @apply bg-white
+        @apply h-screen w-screen 
     }
     #root{
         @apply w-screen h-screen flex items-center flex-col bg-slate-200
