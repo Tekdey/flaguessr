@@ -25,21 +25,21 @@ const LandingPage = () => {
   return (
   <>
   <header className="flex flex-col items-center justify-center gap-1 p-5">
-    <h1 className="text-4xl">Lorem ipsum dolor sit amet.</h1>
-    <h3 className="text-xl">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nam, aperiam!</h3>
+    <h1 className="text-4xl">Guess The Flag</h1>
+    <h3 className="text-xl">The game is simple... guess the flag !</h3>
   </header>
   <section className="flex flex-col justify-center w-full h-full gap-10 p-10">
-  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nulla inventore aliquid error magni iste quasi, temporibus molestias facere laboriosam sed.</p>
+    <p>There are two game modes one with a time limit to challenge yourself, and the other is a free mode, good for learning</p>
   <div className="flex flex-col items-center  w-full">
     <form action="" className="flex flex-col md:flex-row justify-center border-2 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-3xl">
       
       <fieldset className="flex flex-col items-center  justify-center  w-[300px] h-[200px] border-b-2 md:border-r-2">
        <ParameterDefaultToggle setIsFreeMode={setIsFreeMode} init={setIsTime}>Free Mode</ParameterDefaultToggle>
-       {!isFreeMode && <ParameterToggle setIsTime={setIsTime}>Time ?</ParameterToggle>}
+       {!isFreeMode && <ParameterToggle setIsTime={setIsTime}>Challenge</ParameterToggle>}
       </fieldset>
       
       <fieldset className="flex flex-col items-center justify-center gap-5 w-[300px] h-[200px]">
-        {isFreeMode && <p>No parameters ? :(</p>}
+        {isFreeMode && <p>No parameters</p>}
         {!isFreeMode && isTime && <ParameterSlider setTime={setTime}>{time.timeUI}</ParameterSlider>}
      </fieldset>
 

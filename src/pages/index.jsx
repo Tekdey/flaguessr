@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Canvas } from '@react-three/fiber'
 import Earth from '../components/index/Earth'
+import {Link} from "react-router-dom"
 
 const Index = () => {
 
@@ -18,8 +19,9 @@ const Index = () => {
   return (
     <>
     <header className='text-center'>
-      <h1 className='text-3xl p-5'>Welcome to Flaguessr</h1>
-      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Esse fuga excepturi assumenda. Laboriosam nisi voluptatibus aliquam voluptatem sint, asperiores non pariatur nam optio facilis rem officiis nostrum voluptas autem. Nobis!</p>
+      <h1 className='text-3xl p-10'>Welcome to Flaguessr</h1>
+      <p className='text-lg'>Flagessr is a site that will allow you to learn more about the countries of the world!</p>
+      <p className='text-lg'>There is a <Link to="/country" className='text-blue-500'>wiki</Link> as well as an intuitive <Link to="/guesstheflag" className='text-blue-500'>game</Link></p>
     </header>
     {size > 320 && (
     <Canvas>
