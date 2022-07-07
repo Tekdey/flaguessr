@@ -42,3 +42,12 @@ export function refactorRangeTimeUi(time) {
 
   return `${newTime[0]}m 30s`;
 }
+export function refactoreCountryName(name) {
+  let newName = name.toString();
+
+  if (newName.includes("-")) {
+    newName = newName.replace("-", " ");
+  }
+
+  return newName;
+}
