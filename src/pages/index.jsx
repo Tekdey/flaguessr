@@ -24,7 +24,10 @@ const Index = () => {
       <p className='text-lg'>There is a <Link to="/country" className='text-blue-500'>wiki</Link> as well as an intuitive <Link to="/guesstheflag" className='text-blue-500'>game</Link></p>
     </header>
     {size > 320 && (
-    <Canvas>
+    <Canvas style={{
+      width: "100%",
+      height: "100%"
+    }}>
       <React.Suspense fallback={null}>
         <Earth />
       </React.Suspense>

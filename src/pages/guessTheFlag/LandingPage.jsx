@@ -25,11 +25,11 @@ const LandingPage = () => {
   return (
   <>
   <header className="flex flex-col items-center justify-center gap-1 p-5">
-    <h1 className="text-4xl">Guess The Flag</h1>
-    <h3 className="text-xl">The game is simple... guess the flag !</h3>
+    <h1 className="text-3xl sm:text-4xl text-center">Guess The Flag</h1>
+    <h3 className="text-lg sm:text-xl text-center">The game is simple... guess the flag !</h3>
   </header>
   <section className="flex flex-col justify-center w-full h-full gap-10 p-10">
-    <p>There are two game modes one with a time limit to challenge yourself, and the other is a free mode, good for learning</p>
+    <p className="text-center">There are two game modes one with a time limit to challenge yourself, and the other is a free mode, good for learning</p>
   <div className="flex flex-col items-center  w-full">
     <form action="" className="flex flex-col md:flex-row justify-center border-2 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-3xl">
       
